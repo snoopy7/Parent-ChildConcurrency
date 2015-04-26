@@ -109,16 +109,20 @@
     if (!coordinator) {
         return nil;
     }
+    
     _managedObjectContext = [[NSManagedObjectContext alloc] init];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    
     return _managedObjectContext;
 }
+
+
 
 /**************************************************
  DOUBLE MOC MODEL
  **************************************************/
 
-//
+
 //- (NSManagedObjectContext *)managedObjectContext {
 //    // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
 //    if (_managedObjectContext != nil) {
@@ -129,16 +133,19 @@
 //    if (!coordinator) {
 //        return nil;
 //    }
+//    
 //    _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
 //    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+//    
 //    return _managedObjectContext;
 //}
+
 
 /**************************************************
  WRITER MOC MODEL
  **************************************************/
-//
-//
+
+
 //- (NSManagedObjectContext *)managedObjectContext{
 //    if (_managedObjectContext != nil) {
 //        return _managedObjectContext;
@@ -166,24 +173,25 @@
 //        _writerManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
 //        [_writerManagedObjectContext setPersistentStoreCoordinator:coordinator];
 //    }
+//    
 //    return self.writerManagedObjectContext;
 //}
-//
-//
-//
-//#pragma mark - Core Data Saving support
-//
-//- (void)saveContext {
-//    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-//    if (managedObjectContext != nil) {
-//        NSError *error = nil;
-//        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-//            // Replace this implementation with code to handle the error appropriately.
-//            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//            abort();
-//        }
-//    }
-//}
+
+
+
+#pragma mark - Core Data Saving support
+
+- (void)saveContext {
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
+        NSError *error = nil;
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
 
 @end
