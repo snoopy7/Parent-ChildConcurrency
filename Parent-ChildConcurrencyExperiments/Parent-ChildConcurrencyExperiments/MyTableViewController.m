@@ -35,15 +35,13 @@
      WRITER MOC MODEL
      **************************************************/
     
-    //_writerMangedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] writerManagedObjectContext];
-    
-
+//    _writerMangedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] writerManagedObjectContext];
 
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 #pragma mark - Table view data source
@@ -109,7 +107,6 @@
 
 - (IBAction)startClicked:(id)sender {
 
-    
     //create an unsorted array to be sorted via a bubble sort
     NSMutableArray *numArray = [@[] mutableCopy];
     
@@ -123,7 +120,6 @@
      SINGLE MOC MODEL
      **************************************************/
 
-    
     //data load
     NSLog(@"Starting Core Data Operations");
     
@@ -153,7 +149,8 @@
     [fetch setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
     
     NSError *error0 = nil;
-    _personArray = [_managedObjectContext executeFetchRequest:fetch error:&error0];
+    
+    [_personArray addObjectsFromArray:[_managedObjectContext executeFetchRequest:fetch error:&error0]];
     
     NSTimeInterval secondsFetch = [[NSDate date] timeIntervalSinceDate:fetchStartTime];
     NSLog(@"%f seconds for fetch", secondsFetch);
@@ -167,7 +164,7 @@
     NSError * error;
     if(![_managedObjectContext save:&error]){
      
-    NSLog(@"Save Error: %@", [error localizedDescription]);
+        NSLog(@"Save Error: %@", [error localizedDescription]);
      
     }
 
@@ -175,93 +172,92 @@
     NSLog(@"%f seconds for write", secondsSave);
     
     
-
     /**************************************************
      DOUBLE MOC MODEL
      **************************************************/
-//    
-//     
+    
 //    NSManagedObjectContext *temporaryContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
 //    temporaryContext.parentContext = _managedObjectContext;
 //    
-//    
 //    //start load
 //    NSLog(@"inserting data into temporary context...");
+//    
 //    NSDate *loadStartTime = [NSDate date];
 //    
 //    [temporaryContext performBlock:^{
-//     
-//         
+//        
 //        NSDate *insertStart = [NSDate date];
+//        
 //        for (int i = 0; i < 500000; i++) {
-//         
-//        Person * person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:temporaryContext];
-//         
-//        person.name = @"Sharon";
-//        person.age = [[self bubbleSort:numArray] objectAtIndex: 0];
+//            
+//            Person * person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:temporaryContext];
+//            
+//            person.name = @"Sharon";
+//            person.age = [[self bubbleSort:numArray] objectAtIndex: 0];
 //            
 //            if(i % 5000 == 0){
 //                NSError * error;
 //                if(![temporaryContext save:&error]){
-//                     
+//                    
 //                    NSLog(@"Save Error: %@", [error localizedDescription]);
-//                     
+//                    
 //                }
-//             }
-//         }
-//    
+//            }
+//        }
+//        
 //        NSTimeInterval secondsLoad = [[NSDate date] timeIntervalSinceDate:loadStartTime];
 //        NSLog(@"%f seconds for load", secondsLoad);
-//
-//         
+//        
+//        
 //        NSLog(@"pushing to parent context (main context)");
 //        
-//         //push to parent
+//        //push to parent
 //        NSDate *pushStart = [NSDate date];
-//             
+//        
 //        NSError * error;
+//        
 //        if(![temporaryContext save:&error]){
-//         
-//        NSLog(@"Save Error: %@", [error localizedDescription]);
-//         
+//            
+//            NSLog(@"Save Error: %@", [error localizedDescription]);
+//            
 //        }
-//             
+//        
 //        NSTimeInterval secondsPush = [[NSDate date] timeIntervalSinceDate:pushStart];
 //        NSLog(@"%f seconds to push data to parent context (main context)", secondsPush);
-//         
-//     
+//        
 //        //start fetch
 //        NSDate *fetchStart = [NSDate date];
 //        [_managedObjectContext performBlock:^{
-//             
+//            
 //            NSFetchRequest *fetch = [[NSFetchRequest alloc]init];
 //            [fetch setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
-//         
+//            
 //            NSError *error0 = nil;
-//            _personArray = [_managedObjectContext executeFetchRequest:fetch error:&error0];
-//             
+//            
+//            [_personArray addObjectsFromArray:[_managedObjectContext executeFetchRequest:fetch error:&error0]];
+//            
 //            NSTimeInterval secondsFetch = [[NSDate date] timeIntervalSinceDate:fetchStart];
 //            NSLog(@"%f seconds for fetch", secondsFetch);
-//
-//        
+//            
 //            [self.tableView reloadData];
 //            
-//             
+//            
 //            NSDate *writeStart = [NSDate date];
+//            
 //            NSError * error;
+//            
 //            if(![_managedObjectContext save:&error]){
-//             
-//            NSLog(@"Save Error: %@", [error localizedDescription]);
-//             
+//                
+//                NSLog(@"Save Error: %@", [error localizedDescription]);
+//                
 //            }
+//            
 //            NSDate *writeEnd = [NSDate date];
 //            NSTimeInterval secondsPt3 = [writeEnd timeIntervalSinceDate:writeStart];
 //            NSLog(@"%f seconds for write", secondsPt3);
-//         
-//         }];
+//            
+//        }];
 //    }];
-//    
-
     
     /**************************************************
      WRITER MOC MODEL 
@@ -287,11 +283,11 @@
 //            if(i % 5000 == 0){
 //                NSError * error;
 //                if(![temporaryContext save:&error]){
-//
+//                    
 //                    NSLog(@"Save Error: %@", [error localizedDescription]);
-//
+//                    
 //                }
-//                 
+//                
 //            }
 //            
 //        }
@@ -314,7 +310,7 @@
 //        
 //        NSTimeInterval secondsPush = [[NSDate date] timeIntervalSinceDate:pushStart];
 //        NSLog(@"%f seconds to push data to parent context", secondsPush);
-//
+//        
 //        
 //        //start fetch
 //        NSDate *fetchStart = [NSDate date];
@@ -322,13 +318,15 @@
 //            
 //            NSFetchRequest *fetch = [[NSFetchRequest alloc]init];
 //            [fetch setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
+//            
 //            NSError *error0 = nil;
+//            
 //            NSArray *results = [_managedObjectContext executeFetchRequest:fetch error:&error0];
 //            _personArray = [results mutableCopy];
 //            
 //            NSTimeInterval secondsFetch = [[NSDate date] timeIntervalSinceDate:fetchStart];
 //            NSLog(@"%f seconds for fetch", secondsFetch);
-//
+//            
 //            [self.tableView reloadData];
 //            
 //            //push to parent
@@ -336,7 +334,7 @@
 //            
 //            NSDate *writePushStart = [NSDate date];
 //            NSError * error;
-//    
+//            
 //            if(![_managedObjectContext save:&error]){
 //                
 //                NSLog(@"Save Error: %@", [error localizedDescription]);
@@ -345,7 +343,7 @@
 //            
 //            NSTimeInterval secondsWritePush = [[NSDate date] timeIntervalSinceDate:writePushStart];
 //            NSLog(@"%f seconds to push data to parent context", secondsWritePush);
-//
+//            
 //            NSDate *writeStart = [NSDate date];
 //            
 //            [_writerMangedObjectContext performBlock:^{
@@ -360,7 +358,7 @@
 //                
 //                NSTimeInterval secondsWrite = [[NSDate date] timeIntervalSinceDate:writeStart];
 //                NSLog(@"%f seconds for write", secondsWrite);
-//
+//                
 //            }];
 //            
 //        }];
